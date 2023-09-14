@@ -20,6 +20,7 @@ const userSchema = new Schema({
     required: true,
     default: false,
   },
+  savedBeers: [{ type: mongoose.Schema.Types.ObjectId, ref: "beers" }],
 });
 
 const UserModel = mongoose.model("users", userSchema);

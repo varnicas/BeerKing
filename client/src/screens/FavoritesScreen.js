@@ -1,84 +1,27 @@
 import React from "react";
 import { Container, Card, Row, Col, ListGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import background from "../images/landing2.jpg";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
-import { FaStar } from "react-icons/fa";
-const HomeScreen = () => {
-  const [beers, setBeers] = useState([]);
+const FavoritesScreen = () => {
   const [savedBeers, setSavedBeers] = useState([]);
   const userID = useGetUserID();
   useEffect(() => {
-    const fetchBeers = async () => {
+    const fetchSavedBeers = async () => {
       try {
-        const response = await axios.get("/beers/getBeers");
-        setBeers(response.data);
+        const response = await axios.get(`/beers/getSavedBeers/${userID}`);
+        setSavedBeers(response.data.savedBeers);
+        console.log(response.data.savedBeers);
       } catch (error) {
         console.error(error);
       }
     };
-
-    const fetchSavedBeers = async () => {
-      try {
-        const response = await axios.get(`/beers/savedBeers/${userID}`);
-        setSavedBeers(response.data.savedBeers);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchBeers();
     fetchSavedBeers();
   }, []);
 
-  const isBeerSaved = (id) => savedBeers.includes(id);
-
-  const saveBeer = async (beerID) => {
-    try {
-      const response = await axios.put("beers/saveBeer", { beerID, userID });
-      setSavedBeers(response.data.savedBeers);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Container fluid style={{ backgroundColor: "#132a13" }}>
-      <Row style={{ height: "40rem" }}>
-        <Container
-          fluid
-          style={{
-            backgroundImage: `url(${background})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            width: "100%",
-          }}
-        >
-          <Col className="text-center ">
-            <h1
-              style={{
-                color: "white",
-                padding: "5px",
-              }}
-            >
-              Welcome to <strong style={{ color: "#ffe6a7" }}>BeerKing</strong>{" "}
-              {sessionStorage.getItem("name") !== null
-                ? `${sessionStorage.getItem("name")}`
-                : ""}
-            </h1>
-            <p className="fw-bold fs-5" style={{ color: "white" }}>
-              BeerKing is an award-winning micro-brewery based in Split,
-              Croatia. Founded in 2023 to bring incredible craft beer to the
-              music festivals blossoming on Croatia’s shimmering Adriatic Coast,
-              our beers are brewed for the experiences that bring us together.
-              Our beers are brewed with creativity, innovation and a passion for
-              experimentation.
-            </p>
-          </Col>
-        </Container>
-      </Row>
       <Row>
         <h1
           className="text-center fw-bold m-2"
@@ -86,9 +29,10 @@ const HomeScreen = () => {
             color: "#ffe6a7",
           }}
         >
-          Products
+          Favorites
         </h1>
-        {beers
+
+        {savedBeers
           .sort((a, b) => (a.manufacturer > b.manufacturer ? 1 : -1))
           .map((beer) => (
             <Col sm={12} md={6} lg={2} key={beer.name}>
@@ -147,25 +91,10 @@ const HomeScreen = () => {
                   style={{
                     padding: "3px",
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: "end",
                     color: "#ffe6a7",
                   }}
                 >
-                  <FaStar
-                    onClick={() => saveBeer(beer._id)}
-                    disabled={isBeerSaved(beer._id)}
-                    color={isBeerSaved(beer._id) ? "orange" : "lightgray"}
-                    style={
-                      isBeerSaved(beer._id)
-                        ? {
-                            margin: "3",
-                          }
-                        : {
-                            cursor: "pointer",
-                            margin: "3",
-                          }
-                    }
-                  />
                   {beer.price} €
                 </Card.Text>
               </Card>
@@ -176,4 +105,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default FavoritesScreen;

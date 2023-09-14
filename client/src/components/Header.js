@@ -57,6 +57,9 @@ const Header = () => {
               <Nav.Link href="/info" style={{ color: "#ffe6a7" }}>
                 Info
               </Nav.Link>
+              <Nav.Link href="/favorites" style={{ color: "#ffe6a7" }}>
+                Favorites
+              </Nav.Link>
               {sessionStorage.getItem("name") === null ? (
                 <Link to="/login">
                   <Button variant="success">Login</Button>

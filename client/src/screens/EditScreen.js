@@ -45,7 +45,7 @@ const EditScreen = () => {
     <Container fluid style={{ backgroundColor: "#132a13" }}>
       <Row>
         <h1
-          className="text-center fw-bold"
+          className="text-center fw-bold m-2"
           style={{
             color: "#ffe6a7",
           }}

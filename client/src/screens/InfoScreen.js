@@ -44,7 +44,7 @@ const InfoScreen = () => {
         >
           <Col md={8} lg={3} xs={12}>
             <h1
-              className="text-center fw-bold"
+              className="text-center fw-bold m-2"
               style={{
                 color: "#ffe6a7",
               }}
@@ -102,7 +102,7 @@ const InfoScreen = () => {
           </Col>
           <Col md={8} lg={3} xs={12}>
             <h1
-              className="text-center fw-bold"
+              className="text-center fw-bold m-2"
               style={{
                 color: "#ffe6a7",
               }}

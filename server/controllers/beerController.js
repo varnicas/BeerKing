@@ -1,5 +1,5 @@
 const BeerModel = require("../models/beerModel");
-
+const UserModel = require("../models/userModel");
 const addBeer = async (req, res) => {
   try {
     const beer = new BeerModel(req.body);
@@ -77,10 +77,47 @@ const getBeerById = (req, res) => {
     .catch((err) => res.json(err));
 };
 
+const saveBeer = async (req, res) => {
+  try {
+    const beer = await BeerModel.findById(req.body.beerID);
+    const user = await UserModel.findById(req.body.userID);
+    user.savedBeers.push(beer);
+    await user.save();
+    res.json({ savedBeers: user.savedBeers });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+const savedBeersById = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.userID);
+    res.json({ savedBeers: user.savedBeers });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+const savedBeers = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.userID);
+    const savedBeers = await BeerModel.find({
+      _id: { $in: user.savedBeers },
+    });
+
+    res.json({ savedBeers });
+  } catch (error) {
+    res.json(error);
+  }
+};
+
 module.exports = {
   addBeer,
   getBeers,
   deleteBeer,
   updateBeer,
   getBeerById,
+  saveBeer,
+  savedBeersById,
+  savedBeers,
 };

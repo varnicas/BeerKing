@@ -22,6 +22,7 @@ import { Toaster } from "react-hot-toast";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContextProvider } from "../context/userContext";
 import ErrorScreen from "../screens/ErrorScreen";
+import FavoritesScreen from "../screens/FavoritesScreen";
 axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.withCredentials = true;
 const MainComponent = () => {
@@ -77,6 +78,7 @@ const MainComponent = () => {
             <Route path="/info" element={<InfoScreen />} />
             <Route path="/" element={<RegisterScreen />} exact />
             <Route path="/login" element={<LoginScreen />} />
+            <Route path="/favorites" element={<FavoritesScreen />} />
             {isAdmin && (
               <>
                 <Route path="/edit" element={<EditScreen />} />

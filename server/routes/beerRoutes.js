@@ -9,6 +9,9 @@ const {
   deleteBeer,
   updateBeer,
   getBeerById,
+  saveBeer,
+  savedBeersById,
+  savedBeers,
 } = require("../controllers/beerController");
 
 router.get("/getBeers", getBeers);
@@ -16,4 +19,7 @@ router.post("/addBeer", addBeer);
 router.delete("/deleteBeer/:id", deleteBeer);
 router.put("/updateBeer/:id", updateBeer);
 router.get("/getBeerById/:id", getBeerById);
+router.put("/saveBeer", saveBeer);
+router.get("/savedBeers/:userID", savedBeersById);
+router.get("/getSavedBeers/:userID", savedBeers);
 module.exports = router;
