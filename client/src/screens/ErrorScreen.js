@@ -32,7 +32,7 @@ const ErrorScreen = () => {
             </h1>
             <p className="fst-italic fs-4" style={{ color: "white" }}>
               Looks like the page you are looking for doesn't exist or you don't
-              have permission to access it
+              have permission to access it.
               <Button size="lg" variant="danger" onClick={() => navigate(-1)}>
                 {"<-"} Go back
               </Button>
