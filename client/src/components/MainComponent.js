@@ -7,7 +7,7 @@ import axios from "axios";
 import Header from "./Header";
 import Footer from "./Footer";
 import ManufacturersScreen from "../screens/ManufacturersScreen";
-import InfoScreen from "../screens/InfoScreen";
+import UsersScreen from "../screens/UsersScreen";
 import EditScreen from "../screens/EditScreen";
 import AddBeerScreen from "../screens/AddBeerScreen";
 import UpdateBeerScreen from "../screens/UpdateBeerScreen";
@@ -75,7 +75,7 @@ const MainComponent = () => {
             <Route path="/manufacturers" element={<ManufacturersScreen />} />
 
             <Route path="/beerDetails/:id" element={<BeerDetailsScreen />} />
-            <Route path="/info" element={<InfoScreen />} />
+            <Route path="/users" element={<UsersScreen />} />
             <Route path="/" element={<RegisterScreen />} exact />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/favorites" element={<FavoritesScreen />} />

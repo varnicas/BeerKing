@@ -47,15 +47,13 @@ const deleteManufacturer = async (req, res) => {
 };
 
 const countArticles = async (req, res) => {
+  let articles = {};
   try {
-    const manufacturers = await ManufacturerModel.find({});
-    const articles = [];
-    for (let i = 0; i < manufacturers.length; i++) {
-      const beers = await BeerModel.find({
-        manufacturer: manufacturers[i].name,
-      });
-      articles.push({ name: manufacturers[i].name, number: beers.length });
-    }
+    const products = await BeerModel.find({});
+    products.forEach((element) => {
+      articles[element.manufacturer] =
+        (articles[element.manufacturer] || 0) + 1;
+    });
     res.json(articles);
   } catch (error) {
     console.log(error);

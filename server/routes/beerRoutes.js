@@ -12,6 +12,7 @@ const {
   saveBeer,
   savedBeersById,
   savedBeers,
+  deleteSavedBeer,
 } = require("../controllers/beerController");
 
 router.get("/getBeers", getBeers);
@@ -22,4 +23,5 @@ router.get("/getBeerById/:id", getBeerById);
 router.put("/saveBeer", saveBeer);
 router.get("/savedBeers/:userID", savedBeersById);
 router.get("/getSavedBeers/:userID", savedBeers);
+router.delete("/deleteSavedBeer/:userID/:beerID", deleteSavedBeer);
 module.exports = router;

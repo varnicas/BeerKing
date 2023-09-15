@@ -89,6 +89,22 @@ const saveBeer = async (req, res) => {
   }
 };
 
+const deleteSavedBeer = async (req, res) => {
+  try {
+    const beer = await BeerModel.findById(req.params.beerID);
+    const user = await UserModel.findById(req.params.userID);
+    const indexOfBeer = user.savedBeers.indexOf(req.params.beerID);
+    if (indexOfBeer > -1) {
+      user.savedBeers.splice(indexOfBeer, 1);
+    }
+    await user.save();
+    res.json({ savedBeers: user.savedBeers });
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
 const savedBeersById = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID);
@@ -120,4 +136,5 @@ module.exports = {
   saveBeer,
   savedBeersById,
   savedBeers,
+  deleteSavedBeer,
 };

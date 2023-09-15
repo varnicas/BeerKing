@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 const ManufacturersScreen = () => {
   const [manufacturers, setManufacturers] = useState([]);
-
+  const [articles, setArticles] = useState([]);
   useEffect(() => {
     const fetchManufacturers = async () => {
       try {
@@ -17,6 +17,16 @@ const ManufacturersScreen = () => {
         console.error(error);
       }
     };
+    const fetchArticles = async () => {
+      try {
+        const response = await axios.get("/manufacturers/countArticles");
+        setArticles(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchArticles();
     fetchManufacturers();
   }, []);
 
@@ -114,6 +124,18 @@ const ManufacturersScreen = () => {
                     >
                       {`${manufacturer.name} site `}{" "}
                     </a>
+                  </ListGroup.Item>
+                  <ListGroup.Item
+                    className="fw-bold fst-italic"
+                    style={{
+                      backgroundColor: "transparent",
+                      borderWidth: "0px",
+                      color: "white",
+                    }}
+                  >
+                    {manufacturer.name in articles
+                      ? "Products: " + articles[manufacturer.name]
+                      : 0}
                   </ListGroup.Item>
                 </ListGroup>
                 <Card.Text

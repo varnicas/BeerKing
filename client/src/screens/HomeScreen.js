@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { FaStar } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 const HomeScreen = () => {
   const [beers, setBeers] = useState([]);
   const [savedBeers, setSavedBeers] = useState([]);
@@ -39,6 +40,7 @@ const HomeScreen = () => {
     try {
       const response = await axios.put("beers/saveBeer", { beerID, userID });
       setSavedBeers(response.data.savedBeers);
+      toast.success("Beer added to favorites");
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +91,7 @@ const HomeScreen = () => {
           Products
         </h1>
         {beers
-          .sort((a, b) => (a.manufacturer > b.manufacturer ? 1 : -1))
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
           .map((beer) => (
             <Col sm={12} md={6} lg={2} key={beer.name}>
               <Card
@@ -151,21 +153,27 @@ const HomeScreen = () => {
                     color: "#ffe6a7",
                   }}
                 >
-                  <FaStar
-                    onClick={() => saveBeer(beer._id)}
+                  <Button
                     disabled={isBeerSaved(beer._id)}
-                    color={isBeerSaved(beer._id) ? "orange" : "lightgray"}
-                    style={
-                      isBeerSaved(beer._id)
-                        ? {
-                            margin: "3",
-                          }
-                        : {
-                            cursor: "pointer",
-                            margin: "3",
-                          }
-                    }
-                  />
+                    onClick={() => saveBeer(beer._id)}
+                    variant="success"
+                  >
+                    <FaStar
+                      color={isBeerSaved(beer._id) ? "orange" : "lightgray"}
+                      style={
+                        isBeerSaved(beer._id)
+                          ? {
+                              margin: "3",
+                              fontSize: "1.3rem",
+                            }
+                          : {
+                              cursor: "pointer",
+                              margin: "3",
+                              fontSize: "1.3rem",
+                            }
+                      }
+                    />
+                  </Button>
                   {beer.price} €
                 </Card.Text>
               </Card>

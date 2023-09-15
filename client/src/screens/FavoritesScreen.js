@@ -1,10 +1,20 @@
 import React from "react";
-import { Container, Card, Row, Col, ListGroup, Image } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Button,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import error from "../images/8.png";
 import { useGetUserID } from "../hooks/useGetUserID";
+import { FaStar } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 const FavoritesScreen = () => {
   const [savedBeers, setSavedBeers] = useState([]);
   const userID = useGetUserID();
@@ -18,8 +28,25 @@ const FavoritesScreen = () => {
         console.error(error);
       }
     };
+
     fetchSavedBeers();
-  }, []);
+  }, [savedBeers]);
+
+  const deleteBeer = async (beerID) => {
+    try {
+      const response = await axios.delete(
+        `/beers/deleteSavedBeer/${userID}/${beerID}`
+      );
+      if (response.data.error) {
+        toast.error(response.data.error);
+      } else {
+        toast.success("Beer removed from favorites");
+        setSavedBeers(response.data.savedBeers);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -76,7 +103,7 @@ const FavoritesScreen = () => {
             </h1>
 
             {savedBeers
-              .sort((a, b) => (a.manufacturer > b.manufacturer ? 1 : -1))
+              .sort((a, b) => (a.name > b.name ? 1 : -1))
               .map((beer) => (
                 <Col sm={12} md={6} lg={2} key={beer.name}>
                   <Card
@@ -134,10 +161,23 @@ const FavoritesScreen = () => {
                       style={{
                         padding: "3px",
                         display: "flex",
-                        justifyContent: "end",
+                        justifyContent: "space-between",
                         color: "#ffe6a7",
                       }}
                     >
+                      <Button
+                        onClick={() => deleteBeer(beer._id)}
+                        variant="success"
+                      >
+                        <FaStar
+                          color={"orange"}
+                          style={{
+                            cursor: "pointer",
+                            margin: "3",
+                            fontSize: "1.3rem",
+                          }}
+                        />
+                      </Button>
                       {beer.price} €
                     </Card.Text>
                   </Card>

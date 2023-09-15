@@ -54,8 +54,8 @@ const Header = () => {
               <Nav.Link href="/manufacturers" style={{ color: "#ffe6a7" }}>
                 Manufacturers
               </Nav.Link>
-              <Nav.Link href="/info" style={{ color: "#ffe6a7" }}>
-                Info
+              <Nav.Link href="/users" style={{ color: "#ffe6a7" }}>
+                Users
               </Nav.Link>
               <Nav.Link href="/favorites" style={{ color: "#ffe6a7" }}>
                 Favorites
